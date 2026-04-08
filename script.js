@@ -88,13 +88,17 @@
         form: {
           nameLabel: 'Họ tên',
           namePlaceholder: 'Nhập họ tên của bạn',
-          contactLabel: 'Email hoặc SĐT',
-          contactPlaceholder: 'Nhập email hoặc số điện thoại',
+          contactLabel: 'Email',
+          contactPlaceholder: 'Nhập email của bạn',
           messageLabel: 'Nội dung',
           messagePlaceholder: 'Mô tả ngắn nhu cầu dự án của bạn',
           submit: 'Gửi yêu cầu',
           validationRequired: 'Vui lòng điền đầy đủ các trường bắt buộc.',
-          submitSuccess: 'Yêu cầu của bạn đã được ghi nhận. NYS sẽ liên hệ lại sớm.'
+          validationContact: 'Vui lòng nhập địa chỉ email hợp lệ.',
+          submitSuccess: 'Yêu cầu của bạn đã được gửi thành công tới NYS.',
+          submitConfigError: 'Biểu mẫu hiện chưa được cấu hình email hoàn chỉnh. Vui lòng thử lại sau.',
+          submitError: 'Không thể gửi yêu cầu lúc này. Vui lòng thử lại sau.',
+          submitting: 'Đang gửi yêu cầu...'
         },
         meta: {
           emailLabel: 'Email:',
@@ -190,17 +194,21 @@
         }
       },
       contact: {
-        title: 'Contact NYS for Partnership',
+        title: 'Contact',
         form: {
           nameLabel: 'Full name',
           namePlaceholder: 'Enter your full name',
-          contactLabel: 'Email or phone',
-          contactPlaceholder: 'Enter your email or phone number',
+          contactLabel: 'Email',
+          contactPlaceholder: 'Enter your email address',
           messageLabel: 'Message',
           messagePlaceholder: 'Briefly describe your project needs',
           submit: 'Send request',
           validationRequired: 'Please fill in all required fields.',
-          submitSuccess: 'Your request has been received. NYS will contact you soon.'
+          validationContact: 'Please enter a valid email address.',
+          submitSuccess: 'Your request has been sent successfully to NYS.',
+          submitConfigError: 'The form email service is not configured correctly yet. Please try again later.',
+          submitError: 'Unable to send your request right now. Please try again later.',
+          submitting: 'Sending your request...'
         },
         meta: {
           emailLabel: 'Email:',
@@ -296,17 +304,21 @@
         }
       },
       contact: {
-        title: '联系 NYS 洽谈合作',
+        title: '联系我们',
         form: {
           nameLabel: '姓名',
           namePlaceholder: '请输入您的姓名',
-          contactLabel: '邮箱或电话',
-          contactPlaceholder: '请输入邮箱或电话号码',
+          contactLabel: '邮箱',
+          contactPlaceholder: '请输入您的邮箱地址',
           messageLabel: '内容',
           messagePlaceholder: '请简要描述您的项目需求',
           submit: '发送需求',
           validationRequired: '请填写所有必填字段。',
-          submitSuccess: '您的需求已收到，NYS 将尽快与您联系。'
+          validationContact: '请输入有效的邮箱地址。',
+          submitSuccess: '您的需求已成功发送给 NYS。',
+          submitConfigError: '表单邮件服务尚未正确配置，请稍后再试。',
+          submitError: '当前无法发送您的需求，请稍后再试。',
+          submitting: '正在发送您的需求...'
         },
         meta: {
           emailLabel: '邮箱：',
@@ -402,17 +414,21 @@
         }
       },
       contact: {
-        title: 'NYSへのお問い合わせ',
+        title: 'お問い合わせ',
         form: {
           nameLabel: 'お名前',
           namePlaceholder: 'お名前を入力してください',
-          contactLabel: 'メールまたは電話番号',
-          contactPlaceholder: 'メールアドレスまたは電話番号を入力してください',
+          contactLabel: 'メールアドレス',
+          contactPlaceholder: 'メールアドレスを入力してください',
           messageLabel: '内容',
           messagePlaceholder: 'プロジェクト要件を簡単にご記入ください',
           submit: '送信する',
           validationRequired: '必須項目をすべて入力してください。',
-          submitSuccess: 'お問い合わせを受け付けました。NYS より近日中にご連絡します。'
+          validationContact: '有効なメールアドレスを入力してください。',
+          submitSuccess: 'お問い合わせは NYS に正常に送信されました。',
+          submitConfigError: 'フォームのメール設定がまだ正しく完了していません。しばらくしてから再度お試しください。',
+          submitError: '現在、お問い合わせを送信できません。しばらくしてからもう一度お試しください。',
+          submitting: 'お問い合わせを送信しています...'
         },
         meta: {
           emailLabel: 'メール：',
@@ -629,6 +645,7 @@
   var contactStatus = document.getElementById('contact-form-status');
 
   if (contactForm && contactStatus) {
+    var contactSubmitButton = contactForm.querySelector('.contact-submit');
     var requiredFields = contactForm.querySelectorAll('[required]');
 
     function setStatus(statusKey, type) {
@@ -647,9 +664,30 @@
       return hasValue;
     }
 
+    function validateContactValue(value) {
+      var trimmedValue = value.trim();
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue);
+    }
+
+    function validateContactField(field) {
+      var hasValidContact = validateContactValue(field.value);
+      field.classList.toggle('contact-input-error', !hasValidContact);
+      return hasValidContact;
+    }
+
+    function setSubmittingState(isSubmitting) {
+      if (contactSubmitButton) {
+        contactSubmitButton.disabled = isSubmitting;
+      }
+    }
+
     requiredFields.forEach(function (field) {
       field.addEventListener('input', function () {
-        validateField(field);
+        if (field.id === 'contact-contact') {
+          validateContactField(field);
+        } else {
+          validateField(field);
+        }
 
         if (contactStatus.classList.contains('is-error')) {
           setStatus('', '');
@@ -657,14 +695,14 @@
       });
     });
 
-    contactForm.addEventListener('submit', function (event) {
+    contactForm.addEventListener('submit', async function (event) {
       event.preventDefault();
 
       var firstInvalidField = null;
       var isValid = true;
 
       requiredFields.forEach(function (field) {
-        var fieldValid = validateField(field);
+        var fieldValid = field.id === 'contact-contact' ? validateContactField(field) : validateField(field);
 
         if (!fieldValid) {
           isValid = false;
@@ -675,18 +713,68 @@
       });
 
       if (!isValid) {
-        setStatus('contact.form.validationRequired', 'is-error');
+        if (firstInvalidField && firstInvalidField.id === 'contact-contact' && !validateContactField(firstInvalidField)) {
+          setStatus('contact.form.validationContact', 'is-error');
+        } else {
+          setStatus('contact.form.validationRequired', 'is-error');
+        }
         if (firstInvalidField) {
           firstInvalidField.focus();
         }
         return;
       }
 
-      contactForm.reset();
-      requiredFields.forEach(function (field) {
-        field.classList.remove('contact-input-error');
-      });
-      setStatus('contact.form.submitSuccess', 'is-success');
+      var nameField = document.getElementById('contact-name');
+      var contactField = document.getElementById('contact-contact');
+      var messageField = document.getElementById('contact-message');
+      var payload = {
+        name: nameField ? nameField.value.trim() : '',
+        contact: contactField ? contactField.value.trim() : '',
+        message: messageField ? messageField.value.trim() : '',
+        language: currentLanguage
+      };
+
+      setSubmittingState(true);
+      setStatus('contact.form.submitting', '');
+
+      try {
+        var response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          var errorPayload = null;
+
+          try {
+            errorPayload = await response.json();
+          } catch (parseError) {
+            errorPayload = null;
+          }
+
+          var errorCode = errorPayload && errorPayload.code ? errorPayload.code : 'REQUEST_FAILED';
+          throw new Error(errorCode);
+        }
+
+        contactForm.reset();
+        requiredFields.forEach(function (field) {
+          field.classList.remove('contact-input-error');
+        });
+        setStatus('contact.form.submitSuccess', 'is-success');
+      } catch (error) {
+        if (error.message === 'INVALID_CONTACT') {
+          setStatus('contact.form.validationContact', 'is-error');
+        } else if (error.message === 'CONFIG_MISSING' || error.message === 'CONFIG_PLACEHOLDER') {
+          setStatus('contact.form.submitConfigError', 'is-error');
+        } else {
+          setStatus('contact.form.submitError', 'is-error');
+        }
+      } finally {
+        setSubmittingState(false);
+      }
     });
   }
 })();
