@@ -99,6 +99,8 @@
           submitConfigError: 'Biểu mẫu hiện chưa được cấu hình email hoàn chỉnh. Vui lòng thử lại sau.',
           submitAuthError: 'Cấu hình email bị từ chối khi xác thực. Vui lòng kiểm tra SMTP trên hệ thống triển khai.',
           submitConnectionError: 'Không thể kết nối tới máy chủ email lúc này. Vui lòng thử lại sau.',
+          submitRouteError: 'Biểu mẫu chưa kết nối đúng với API trên hệ thống triển khai. Vui lòng kiểm tra cấu hình Vercel.',
+          submitNetworkError: 'Không thể kết nối tới máy chủ website lúc này. Vui lòng thử lại sau.',
           submitError: 'Không thể gửi yêu cầu lúc này. Vui lòng thử lại sau.',
           submitting: 'Đang gửi yêu cầu...'
         },
@@ -211,6 +213,8 @@
           submitConfigError: 'The form email service is not configured correctly yet. Please try again later.',
           submitAuthError: 'The email service rejected authentication. Check the SMTP settings in production.',
           submitConnectionError: 'The site cannot connect to the email server right now. Please try again later.',
+          submitRouteError: 'The form API is not deployed correctly yet. Check the Vercel configuration.',
+          submitNetworkError: 'The site cannot reach the server right now. Please try again later.',
           submitError: 'Unable to send your request right now. Please try again later.',
           submitting: 'Sending your request...'
         },
@@ -323,6 +327,8 @@
           submitConfigError: '表单邮件服务尚未正确配置，请稍后再试。',
           submitAuthError: '邮件服务认证被拒绝。请检查线上环境中的 SMTP 配置。',
           submitConnectionError: '当前无法连接到邮件服务器，请稍后再试。',
+          submitRouteError: '表单 API 尚未正确部署。请检查 Vercel 配置。',
+          submitNetworkError: '当前无法连接到网站服务器，请稍后再试。',
           submitError: '当前无法发送您的需求，请稍后再试。',
           submitting: '正在发送您的需求...'
         },
@@ -435,6 +441,8 @@
           submitConfigError: 'フォームのメール設定がまだ正しく完了していません。しばらくしてから再度お試しください。',
           submitAuthError: 'メール認証に失敗しました。公開環境の SMTP 設定を確認してください。',
           submitConnectionError: '現在メールサーバーに接続できません。しばらくしてから再度お試しください。',
+          submitRouteError: 'フォーム API が公開環境で正しくデプロイされていません。Vercel 設定を確認してください。',
+          submitNetworkError: '現在サイトのサーバーに接続できません。しばらくしてから再度お試しください。',
           submitError: '現在、お問い合わせを送信できません。しばらくしてからもう一度お試しください。',
           submitting: 'お問い合わせを送信しています...'
         },
@@ -733,6 +741,7 @@
       setStatus('contact.form.submitting', '');
 
       try {
+        var errorPayload = null;
         var response = await fetch('/api/contact', {
           method: 'POST',
           headers: {
@@ -742,15 +751,13 @@
         });
 
         if (!response.ok) {
-          var errorPayload = null;
-
           try {
             errorPayload = await response.json();
           } catch (parseError) {
             errorPayload = null;
           }
 
-          var errorCode = errorPayload && errorPayload.code ? errorPayload.code : 'REQUEST_FAILED';
+          var errorCode = errorPayload && errorPayload.code ? errorPayload.code : (response.status === 404 ? 'API_ROUTE_MISSING' : 'REQUEST_FAILED');
           throw new Error(errorCode);
         }
 
@@ -768,6 +775,10 @@
           setStatus('contact.form.submitAuthError', 'is-error');
         } else if (error.message === 'SMTP_CONNECTION_FAILED') {
           setStatus('contact.form.submitConnectionError', 'is-error');
+        } else if (error.message === 'API_ROUTE_MISSING') {
+          setStatus('contact.form.submitRouteError', 'is-error');
+        } else if (error.name === 'TypeError') {
+          setStatus('contact.form.submitNetworkError', 'is-error');
         } else {
           setStatus('contact.form.submitError', 'is-error');
         }
