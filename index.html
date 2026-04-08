@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NYS – Navigate Your Success | Technology & Bridge Solutions</title>
+  <title data-i18n="meta.title">NYS – Navigate Your Success | Technology & Bridge Solutions</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,22 +14,36 @@
       <div class="container header-inner">
         <div class="logo">
           <!-- <span class="logo-mark">NYS</span> -->
-          <span class="logo-text">Navigate Your Success</span>
+          <span class="logo-text" data-i18n="brand.tagline">Navigate Your Success</span>
         </div>
         <nav class="nav">
          
           <ul class="nav-list">
-            <li><a href="#about">Giới thiệu</a></li>
-            <li><a href="#solutions">Giải pháp</a></li>
-            <li><a href="#contact">Liên hệ</a></li>
+            <li><a href="#gioi-thieu" data-i18n="nav.about">Giới thiệu</a></li>
+            <li><a href="#giai-phap" data-i18n="nav.solutions">Giải pháp</a></li>
+            <li><a href="#lien-he" data-i18n="nav.contact">Liên hệ</a></li>
           </ul>
+
+          <div class="language-menu">
+            <button id="language-menu-button" class="language-menu-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="language-menu-list" data-i18n-aria-label="language.buttonAriaLabel" aria-label="Chọn ngôn ngữ">
+              <span class="language-menu-current" id="language-menu-current">VI</span>
+              <span class="language-menu-chevron" aria-hidden="true"></span>
+            </button>
+
+            <div id="language-menu-list" class="language-menu-list" role="menu" data-i18n-aria-label="language.menuAriaLabel" aria-label="Tùy chọn ngôn ngữ">
+              <button class="language-menu-item is-active" type="button" data-lang="vi" role="menuitemradio" aria-checked="true" data-i18n="language.names.vi">Tiếng Việt</button>
+              <button class="language-menu-item" type="button" data-lang="en" role="menuitemradio" aria-checked="false" data-i18n="language.names.en">English</button>
+              <button class="language-menu-item" type="button" data-lang="zh" role="menuitemradio" aria-checked="false" data-i18n="language.names.zh">中文</button>
+              <button class="language-menu-item" type="button" data-lang="ja" role="menuitemradio" aria-checked="false" data-i18n="language.names.ja">日本語</button>
+            </div>
+          </div>
         </nav>
       </div>
     </header>
    
     <div class="hero-scroll-hint">
-      <a href="#about">
-        <span class="hero-scroll-text">Tìm hiểu thêm</span>
+      <a href="#gioi-thieu">
+        <span class="hero-scroll-text" data-i18n="hero.scroll">Tìm hiểu thêm</span>
         <span class="hero-scroll-chevron"></span>
       </a>
     </div>
@@ -38,69 +52,60 @@
   <section class="content">
 
   <!-- ABOUT -->
-  <section id="about" class="section about-section reveal">
+  <section id="gioi-thieu" class="section about-section reveal">
     <div class="container">
-      <h2>Giới thiệu về NYS</h2>
+      <h2 data-i18n="about.title">Giới thiệu về NYS</h2>
       <div class="about-grid">
         <div>
-          <p>
-            Công ty TNHH Công Nghệ NYS là đơn vị chiến lược cầu nối công nghệ hoạt động giữa Nhật Bản,
-            Trung Quốc và Việt Nam. Chúng tôi hỗ trợ chuyển giao công nghệ xuyên biên giới,
-            tìm kiếm & kết nối nhà sản xuất, tư vấn và triển khai giải pháp
-            cho các dự án công nghiệp, logistics và hạ tầng thông minh.
+          <p data-i18n="about.body">
+           Công ty TNHH Công Nghệ NYS là đơn vị cầu nối công nghệ chiến lược đáng tin cậy giữa Nhật Bản, Trung Quốc và Việt Nam. Chúng tôi hỗ trợ chuyển giao công nghệ xuyên biên giới, kết nối nhà sản xuất và triển khai giải pháp cho các lĩnh vực sản xuất, logistics và đô thị thông minh.
           </p>
           
         </div>
         <div class="about-visual-wrapper">
-          <img src="2nd.png" alt="Minh họa các giá trị cốt lõi và hợp tác dài hạn của NYS" class="about-visual" loading="lazy">
+          <img src="2nd.png" alt="Minh họa các giá trị cốt lõi và hợp tác dài hạn của NYS" data-i18n-alt="about.visualAlt" class="about-visual" loading="lazy">
         </div>
       </div>
     </div>
   </section>
 
   <!-- CORE ROLES -->
-  <section id="solutions" class="section bg-light reveal reveal-delay-1">
+  <section id="giai-phap" class="section bg-light reveal reveal-delay-1">
     <div class="container">
-      <h2>Vai trò chính của NYS</h2>
+      <h2 data-i18n="roles.title">Vai trò chính của NYS</h2>
 
       <div class="grid">
         <div class="card reveal reveal-delay-1">
           <div class="card-icon">
-            <img src="hands.png" alt="Biểu tượng bắt tay - Cầu nối thị trường & đối tác">
+            <img src="hands.png" alt="Biểu tượng bắt tay - Cầu nối thị trường & đối tác" data-i18n-alt="roles.marketAlt">
           </div>
-          <h3>Cầu nối thị trường & đối tác</h3>
-          <ul>
-            <li>Tư vấn chiến lược thị trường Nhật Bản, Trung Quốc</li>
-            <li>Đại diện & điều phối dự án tại địa phương</li>
-            <li>Hỗ trợ giao tiếp đa ngôn ngữ ( Anh / Nhật / Trung )</li>
-            <li>Kết nối nhà máy, nhà cung cấp và khách hàng cuối</li>
-          </ul>
+          <h3>
+            <span data-i18n="roles.marketTitle">Cầu nối thị trường</span>
+            <span class="role-subtitle" data-i18n="roles.marketSubtitle">(Nhật – Trung – Việt)</span>
+          </h3>
+    
         </div>
 
             <div class="card reveal reveal-delay-3">
           <div class="card-icon">
-            <img src="chip.png" alt="Biểu tượng bộ não - Tư vấn công nghệ & tích hợp hệ thống">
+            <img src="chip.png" alt="Biểu tượng bộ não - Tư vấn công nghệ & tích hợp hệ thống" data-i18n-alt="roles.integrationAlt">
           </div>
-          <h3>Tích hợp hệ thống & phần cứng</h3>
-          <ul>
-            <li>Tìm nguồn cung & đánh giá nhà sản xuất phần cứng</li>
-            <li>Dịch vụ OEM / ODM theo yêu cầu</li>
-            <li>Tích hợp phần cứng với nền tảng phần mềm </li>
-            <li>Tùy chỉnh giải pháp theo từng dự án, từng ngành</li>
-          </ul>
+          <h3>
+            <span data-i18n="roles.integrationTitle">Tích hợp hệ thống & phần cứng</span>
+            <span class="role-subtitle" data-i18n="roles.integrationSubtitle">(OEM / ODM / Tích hợp hệ thống)</span>
+          </h3>
+       
         </div>
 
         <div class="card reveal reveal-delay-2">
           <div class="card-icon">
-          <img src="brain.png" alt="Biểu tượng chip AI - Giải pháp công nghệ & tích hợp hệ thống">
+          <img src="brain.png" alt="Biểu tượng chip AI - Giải pháp công nghệ & tích hợp hệ thống" data-i18n-alt="roles.aiAlt">
           </div>
-          <h3>Giải pháp AI & IoT ứng dụng</h3>
-          <ul>
-            <li>Hệ thống camera AI, nhận diện biển số & hành vi</li>
-            <li>Giải pháp bãi đỗ xe và đô thị thông minh</li>
-            <li>Giám sát GPS & quản lý đội xe theo thời gian thực</li>
-            <li>Giám sát nhà máy, cảm biến IoT & thu thập dữ liệu</li>
-          </ul>
+          <h3>
+            <span data-i18n="roles.aiTitle">Giải pháp AI & IoT ứng dụng</span>
+            <span class="role-subtitle" data-i18n="roles.aiSubtitle">(Camera AI / IoT / Hệ thống thông minh)</span>
+          </h3>
+      
         </div>
 
     
@@ -111,43 +116,25 @@
    <!-- SIX ICONS SECTION -->
     <section id="icons" class="section reveal">
       <div class="container">
-        <h2>Lĩnh vực</h2>
+        <h2 data-i18n="industries.title">Lĩnh vực</h2>
         <div class="icon-grid">
           <div class="icon-item">
             <div class="icon-card">
-              <img src="1.png" alt="Nhà máy sản xuất (điện tử, cơ khí, FMCG…)" loading="lazy">
+              <img src="1.png" alt="Sản xuất" data-i18n-alt="industries.manufacturing" loading="lazy">
             </div>
-            <p class="icon-label">Nhà máy sản xuất </p>
+            <p class="icon-label" data-i18n="industries.manufacturing">Sản xuất</p>
           </div>
           <div class="icon-item">
             <div class="icon-card">
-              <img src="2.png" alt="Khu công nghiệp và khu chế xuất" loading="lazy">
+              <img src="3.png" alt="Logistics &amp; Kho vận" data-i18n-alt="industries.logistics" loading="lazy">
             </div>
-            <p class="icon-label">Khu công nghiệp & khu chế xuất</p>
+            <p class="icon-label" data-i18n="industries.logistics">Logistics &amp; Kho vận</p>
           </div>
           <div class="icon-item">
             <div class="icon-card">
-              <img src="3.png" alt="Logistics, vận tải và quản lý đội xe" loading="lazy">
+              <img src="4.png" alt="Đô thị thông minh" data-i18n-alt="industries.smartCity" loading="lazy">
             </div>
-            <p class="icon-label">Logistics, vận tải & quản lý đội xe</p>
-          </div>
-          <div class="icon-item">
-            <div class="icon-card">
-              <img src="4.png" alt="Đơn vị vận hành bãi đỗ xe và đô thị thông minh" loading="lazy">
-            </div>
-            <p class="icon-label">Bãi đỗ xe & đô thị thông minh</p>
-          </div>
-          <div class="icon-item">
-            <div class="icon-card">
-              <img src="5.png" alt="Hạ tầng năng lượng và tiện ích" loading="lazy">
-            </div>
-            <p class="icon-label">Hạ tầng năng lượng & tiện ích</p>
-          </div>
-          <div class="icon-item">
-            <div class="icon-card">
-              <img src="6.png" alt="Kho vận, trung tâm phân phối và chuỗi bán lẻ" loading="lazy">
-            </div>
-            <p class="icon-label">Kho vận, trung tâm phân phối & chuỗi bán lẻ</p>
+            <p class="icon-label" data-i18n="industries.smartCity">Đô thị thông minh</p>
           </div>
         </div>
       </div>
@@ -157,13 +144,13 @@
   <!-- WHY NYS -->
   <section id="why" class="section bg-light reveal">
     <div class="container">
-      <h2>Lý do chọn NYS</h2>
+      <h2 data-i18n="why.title">Lý do chọn NYS</h2>
       <ul class="bullet-list">
-        <li>Mạng lưới đối tác sản xuất và tích hợp hệ thống tại Nhật Bản, Trung Quốc và Việt Nam</li>
-        <li>Đội ngũ hiểu tiêu chuẩn, quy trình và văn hóa làm việc của từng thị trường</li>
-        <li>Kinh nghiệm triển khai thực tế trong các dự án công nghiệp, logistics và hạ tầng</li>
-        <li>Mô hình hợp tác linh hoạt: tư vấn, phân phối, tích hợp hoặc đồng đầu tư</li>
-        <li>Tập trung tối ưu tổng chi phí sở hữu & hiệu quả đầu tư dài hạn</li>
+        <li data-i18n="why.points.network">Mạng lưới đối tác tại Nhật – Trung – Việt</li>
+        <li data-i18n="why.points.marketKnowledge">Am hiểu tiêu chuẩn &amp; cách làm việc từng thị trường</li>
+        <li data-i18n="why.points.execution">Kinh nghiệm triển khai thực tế</li>
+        <li data-i18n="why.points.flexibility">Mô hình hợp tác linh hoạt</li>
+        <li data-i18n="why.points.efficiency">Tối ưu chi phí &amp; hiệu quả đầu tư</li>
       </ul>
     </div>
   </section>
@@ -171,27 +158,27 @@
   <!-- PROCESS -->
   <section id="process" class="section reveal">
     <div class="container">
-      <h2>Quy trình hợp tác</h2>
+      <h2 data-i18n="process.title">Quy trình hợp tác</h2>
       <ol class="process-list">
         <li>
-          <strong>Phân tích nhu cầu</strong>
-          <span>Trao đổi mục tiêu kinh doanh, hiện trạng hệ thống và ngân sách dự kiến.</span>
+          <strong data-i18n="process.steps.analysis.title">Phân tích nhu cầu</strong>
+          <span data-i18n="process.steps.analysis.desc">Hiểu mục tiêu &amp; hiện trạng</span>
         </li>
         <li>
-          <strong>Thiết kế giải pháp</strong>
-          <span>Đề xuất kiến trúc giải pháp, lộ trình triển khai và chỉ số đo lường hiệu quả.</span>
+          <strong data-i18n="process.steps.design.title">Thiết kế giải pháp</strong>
+          <span data-i18n="process.steps.design.desc">Đề xuất kiến trúc &amp; lộ trình</span>
         </li>
         <li>
-          <strong>Lựa chọn công nghệ</strong>
-          <span>Kết hợp thiết bị phần cứng, nền tảng phần mềm và dịch vụ phù hợp.</span>
+          <strong data-i18n="process.steps.selection.title">Lựa chọn công nghệ</strong>
+          <span data-i18n="process.steps.selection.desc">Phần cứng + phần mềm phù hợp</span>
         </li>
         <li>
-          <strong>Triển khai</strong>
-          <span>Quản lý dự án, phối hợp nhà cung cấp và bàn giao hệ thống vận hành.</span>
+          <strong data-i18n="process.steps.implementation.title">Triển khai</strong>
+          <span data-i18n="process.steps.implementation.desc">Quản lý &amp; bàn giao hệ thống</span>
         </li>
         <li>
-          <strong>Hỗ trợ dài hạn</strong>
-          <span>Đào tạo, hỗ trợ vận hành, tối ưu & mở rộng theo chiến lược của khách hàng.</span>
+          <strong data-i18n="process.steps.support.title">Hỗ trợ dài hạn</strong>
+          <span data-i18n="process.steps.support.desc">Vận hành &amp; tối ưu</span>
         </li>
       </ol>
     </div>
@@ -199,18 +186,45 @@
 
    
   <!-- CONTACT -->
-  <section id="contact" class="section contact reveal">
+  <section id="lien-he" class="section contact reveal">
     <div class="container">
-      <h2>Liên hệ hợp tác cùng NYS</h2>
-      <p><strong>Email:</strong> contact@nys.com.vn</p>
-      <p><strong>Địa điểm:</strong> Tòa nhà AC Building | Ngõ 78 Duy Tân, Cầu Giấy, Hà Nội, Việt Nam</p>
+      <div class="contact-shell">
+        <div class="contact-intro">
+          <h2 data-i18n="contact.title">Liên hệ hợp tác cùng NYS</h2>
+        </div>
+
+        <form id="contact-form" class="contact-form" novalidate>
+          <div class="contact-field">
+            <label for="contact-name" data-i18n="contact.form.nameLabel">Họ tên</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" required data-i18n-placeholder="contact.form.namePlaceholder" placeholder="Nhập họ tên của bạn">
+          </div>
+
+          <div class="contact-field">
+            <label for="contact-contact" data-i18n="contact.form.contactLabel">Email hoặc SĐT</label>
+            <input id="contact-contact" name="contact" type="text" autocomplete="email" required data-i18n-placeholder="contact.form.contactPlaceholder" placeholder="Nhập email hoặc số điện thoại">
+          </div>
+
+          <div class="contact-field">
+            <label for="contact-message" data-i18n="contact.form.messageLabel">Nội dung</label>
+            <textarea id="contact-message" name="message" rows="5" required data-i18n-placeholder="contact.form.messagePlaceholder" placeholder="Mô tả ngắn nhu cầu dự án của bạn"></textarea>
+          </div>
+
+          <button class="contact-submit" type="submit" data-i18n="contact.form.submit">Gửi yêu cầu</button>
+          <p class="contact-form-status" id="contact-form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="contact-meta">
+          <p><strong data-i18n="contact.meta.emailLabel">Email:</strong> nystechcoltd@gmail.com</p>
+          <p><strong data-i18n="contact.meta.addressLabel">Địa điểm:</strong> <span data-i18n="contact.meta.addressValue">Tầng 8, Tòa nhà AC | Số 3, Ngõ 78 Duy Tân, Cầu Giấy, Hà Nội, Việt Nam</span></p>
+        </div>
+      </div>
     </div>
   </section>
 
   </section>
 
   <footer>
-    <p>© 2026 CTY TNHH CÔNG NGHỆ NYS</p>
+    <p data-i18n="footer.copy">© 2026 CTY TNHH CÔNG NGHỆ NYS</p>
   </footer>
   <script src="script.js"></script>
 </body>
