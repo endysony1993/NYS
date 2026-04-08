@@ -86,6 +86,8 @@ module.exports = async function handler(req, res) {
   ].join('\n');
 
   try {
+    await transporter.verify();
+
     var mailOptions = {
       from: fromEmail,
       to: toEmail,
@@ -99,6 +101,22 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({ ok: true });
   } catch (error) {
+    console.error('Contact form send failed', {
+      code: error && error.code ? error.code : 'UNKNOWN',
+      command: error && error.command ? error.command : null,
+      response: error && error.response ? error.response : null,
+      responseCode: error && error.responseCode ? error.responseCode : null,
+      message: error && error.message ? error.message : 'Unknown error'
+    });
+
+    if (error && (error.code === 'EAUTH' || error.responseCode === 535)) {
+      return res.status(500).json({ error: 'SMTP authentication failed.', code: 'SMTP_AUTH_FAILED' });
+    }
+
+    if (error && (error.code === 'ECONNECTION' || error.code === 'ETIMEDOUT' || error.code === 'ESOCKET')) {
+      return res.status(500).json({ error: 'SMTP connection failed.', code: 'SMTP_CONNECTION_FAILED' });
+    }
+
     return res.status(500).json({ error: 'Unable to send message.', code: 'SEND_FAILED' });
   }
 };
