@@ -590,22 +590,12 @@
 
   // Mobile nav & submenu toggles
   if (navbar) {
-    var navToggle = navbar.querySelector('.nav-toggle');
     var navList = navbar.querySelector('.nav-list');
     var submenuToggles = navbar.querySelectorAll('.submenu-toggle');
 
-    if (navToggle && navList) {
-      navToggle.addEventListener('click', function () {
-        var isOpen = navbar.classList.toggle('nav-open');
-        navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-
-      // Close menu after clicking a link (useful on mobile)
+    if (navList) {
       navList.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function () {
-          navbar.classList.remove('nav-open');
-          navToggle.setAttribute('aria-expanded', 'false');
-
           navbar.querySelectorAll('.nav-item-has-submenu.open').forEach(function (item) {
             item.classList.remove('open');
             var btn = item.querySelector('.submenu-toggle');
