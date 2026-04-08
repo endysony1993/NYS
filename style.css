@@ -459,6 +459,18 @@ a:hover {
   }
 }
 
+@media (min-width: 769px) and (max-width: 1100px) and (orientation: portrait) {
+  .hero {
+    background-image: url("ipad.png");
+    background-size: contain;
+    background-position: center top;
+  }
+
+  .hero-scroll-hint {
+    bottom: 24px;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1180px) and (orientation: landscape) {
   .hero {
     background-size: cover;
