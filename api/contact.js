@@ -29,9 +29,59 @@ function parseRequestBody(body) {
   return body;
 }
 
+function getConfigSummary() {
+  const smtpHost = process.env.SMTP_HOST || '';
+  const smtpPort = Number(process.env.SMTP_PORT || 587);
+  const smtpUser = process.env.SMTP_USER || '';
+  const smtpPass = process.env.SMTP_PASS || '';
+  const smtpSecure = String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true';
+  const toEmail = process.env.CONTACT_TO_EMAIL || 'nystechcoltd@gmail.com';
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser;
+  const missing = [];
+
+  if (!smtpHost) missing.push('SMTP_HOST');
+  if (!smtpUser) missing.push('SMTP_USER');
+  if (!smtpPass) missing.push('SMTP_PASS');
+  if (!fromEmail) missing.push('CONTACT_FROM_EMAIL');
+
+  return {
+    smtpHost,
+    smtpPort,
+    smtpUser,
+    smtpPass,
+    smtpSecure,
+    toEmail,
+    fromEmail,
+    missing,
+    hasPlaceholderValues: isPlaceholderValue(smtpUser) || isPlaceholderValue(smtpPass) || isPlaceholderValue(fromEmail)
+  };
+}
+
 module.exports = async function handler(req, res) {
+  if (req.method === 'GET') {
+    const config = getConfigSummary();
+
+    return res.status(200).json({
+      ok: true,
+      route: 'contact-api',
+      version: '2026-04-09-4',
+      configured: config.missing.length === 0 && !config.hasPlaceholderValues,
+      smtp: {
+        host: config.smtpHost || null,
+        port: config.smtpPort,
+        secure: config.smtpSecure,
+        userConfigured: Boolean(config.smtpUser),
+        passConfigured: Boolean(config.smtpPass),
+        fromConfigured: Boolean(config.fromEmail),
+        toConfigured: Boolean(config.toEmail)
+      },
+      missing: config.missing,
+      hasPlaceholderValues: config.hasPlaceholderValues
+    });
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'Method not allowed.' });
   }
 
@@ -49,19 +99,20 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid contact value.', code: 'INVALID_CONTACT' });
   }
 
-  const smtpHost = process.env.SMTP_HOST;
-  const smtpPort = Number(process.env.SMTP_PORT || 587);
-  const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
-  const smtpSecure = String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true';
-  const toEmail = process.env.CONTACT_TO_EMAIL || 'nystechcoltd@gmail.com';
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser;
+  const config = getConfigSummary();
+  const smtpHost = config.smtpHost;
+  const smtpPort = config.smtpPort;
+  const smtpUser = config.smtpUser;
+  const smtpPass = config.smtpPass;
+  const smtpSecure = config.smtpSecure;
+  const toEmail = config.toEmail;
+  const fromEmail = config.fromEmail;
 
-  if (!smtpHost || !smtpUser || !smtpPass || !fromEmail) {
+  if (config.missing.length > 0) {
     return res.status(500).json({ error: 'Email server is not configured.', code: 'CONFIG_MISSING' });
   }
 
-  if (isPlaceholderValue(smtpUser) || isPlaceholderValue(smtpPass) || isPlaceholderValue(fromEmail)) {
+  if (config.hasPlaceholderValues) {
     return res.status(500).json({ error: 'Email server is using placeholder values.', code: 'CONFIG_PLACEHOLDER' });
   }
 
